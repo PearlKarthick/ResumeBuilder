@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Builder</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    .container { max-width: 600px; margin: auto; }
+    input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; }
+    #resume-preview { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
+    button { padding: 10px 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Resume Builder</h1>
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="text" id="jobTitle" placeholder="Job Title">
+    <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+    <textarea id="experience" placeholder="Experience"></textarea>
+    <textarea id="education" placeholder="Education"></textarea>
+    <button onclick="generateResume()">Preview Resume</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+
+    <div id="resume-preview"></div>
+  </div>
+
+  https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js</script>
+  <script>
+    function generateResume() {
+      const name = document.getElementById('name').value;
+      const jobTitle = document.getElementById('jobTitle').value;
+      const skills = document.getElementById('skills').value;
+      const experience = document.getElementById('experience').value;
+      const education = document.getElementById('education').value;
+
+      document.getElementById('resume-preview').innerHTML = `
+        <h2>${name}</h2>
+        <h3>${jobTitle}</h3>
+        <p><strong>Skills:</strong> ${skills}</p>
+        <p><strong>Experience:</strong> ${experience}</p>
+        <p><strong>Education:</strong> ${education}</p>
+      `;
+    }
+
+    function downloadPDF() {
+      const element = document.getElementById('resume-preview');
+      html2pdf().from(element).save('resume.pdf');
+    }
+  </script>
+</body>
+</html>
