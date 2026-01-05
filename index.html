@@ -17,12 +17,12 @@
 </head>
 <body class='bg-light'>
 <div class='container my-4'>
-  <h1 class='text-center mb-4'>AI Resume Builder</h1>
+  <h1 class='text-center mb-4'>Complete Resume Builder</h1>
   <div class='progress mb-3'>
-    <div class='progress-bar' role='progressbar' style='width: 20%;'></div>
+    <div class='progress-bar' role='progressbar' style='width: 10%;'></div>
   </div>
   <form id='resume-form' class='card p-4 shadow'>
-    <!-- Steps similar to previous version -->
+    <!-- Step 1: Contact Information -->
     <div class='form-step active'>
       <h2>Contact Information</h2>
       <input type='text' id='name' class='form-control mb-2' placeholder='Full Name' required>
@@ -32,13 +32,74 @@
       <input type='text' id='location' class='form-control mb-2' placeholder='Location (City, State)'>
       <button type='button' class='btn btn-primary next-btn'>Next</button>
     </div>
+
+    <!-- Step 2: Professional Summary -->
     <div class='form-step'>
       <h2>Professional Summary</h2>
       <div id='summary-editor' style='height:150px;' class='mb-3'></div>
       <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
       <button type='button' class='btn btn-primary next-btn'>Next</button>
     </div>
-    <!-- Additional steps omitted for brevity but same as previous richtext version -->
+
+    <!-- Step 3: Work Experience -->
+    <div class='form-step'>
+      <h2>Work Experience</h2>
+      <input type='text' id='jobTitle' class='form-control mb-2' placeholder='Job Title'>
+      <input type='text' id='companyName' class='form-control mb-2' placeholder='Company Name'>
+      <input type='text' id='jobLocation' class='form-control mb-2' placeholder='Location'>
+      <input type='text' id='dates' class='form-control mb-2' placeholder='Dates of Employment'>
+      <textarea id='responsibilities' class='form-control mb-2' placeholder='Key Responsibilities & Achievements'></textarea>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Step 4: Education -->
+    <div class='form-step'>
+      <h2>Education</h2>
+      <input type='text' id='degree' class='form-control mb-2' placeholder='Degree'>
+      <input type='text' id='institution' class='form-control mb-2' placeholder='Institution Name'>
+      <input type='text' id='gradYear' class='form-control mb-2' placeholder='Graduation Year'>
+      <input type='text' id='certifications' class='form-control mb-2' placeholder='Relevant Certifications'>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Step 5: Skills -->
+    <div class='form-step'>
+      <h2>Skills</h2>
+      <textarea id='techSkills' class='form-control mb-2' placeholder='Technical Skills'></textarea>
+      <textarea id='softSkills' class='form-control mb-2' placeholder='Soft Skills'></textarea>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Step 6: Projects -->
+    <div class='form-step'>
+      <h2>Projects</h2>
+      <input type='text' id='projectName' class='form-control mb-2' placeholder='Project Name'>
+      <input type='text' id='technologies' class='form-control mb-2' placeholder='Technologies Used'>
+      <textarea id='impact' class='form-control mb-2' placeholder='Impact or Outcome'></textarea>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Step 7: Achievements & Awards -->
+    <div class='form-step'>
+      <h2>Achievements & Awards</h2>
+      <textarea id='achievements' class='form-control mb-2' placeholder='Certifications, recognitions, or notable accomplishments'></textarea>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Step 8: Languages -->
+    <div class='form-step'>
+      <h2>Languages</h2>
+      <textarea id='languages' class='form-control mb-2' placeholder='Languages'></textarea>
+      <button type='button' class='btn btn-secondary prev-btn'>Previous</button>
+      <button type='button' class='btn btn-primary next-btn'>Next</button>
+    </div>
+
+    <!-- Final Step: Preview & Download -->
     <div class='form-step'>
       <h2>Preview & Download</h2>
       <div id='resume-preview' class='border p-3 bg-white'></div>
@@ -46,10 +107,11 @@
       <div id='ats-score' class='alert alert-warning mt-2'>ATS Score will appear here</div>
       <div class='social-share mt-3'>
         <p>Share your resume:</p>
-        <a href='#' class='btn btn-primary me-2'>Share on LinkedIn</a>
-        <a href='#' class='btn btn-info me-2'>Share on Twitter</a>
-        <a href='#' class='btn btn-secondary'>Share on Facebook</a>
+        <a href='#' class='btn btn-primary me-2'>LinkedIn</a>
+        <a href='#' class='btn btn-info me-2'>Twitter</a>
+        <a href='#' class='btn btn-secondary'>Facebook</a>
       </div>
+      <button type='button' class='btn btn-secondary prev-btn mt-3'>Previous</button>
       <button type='button' class='btn btn-success mt-3' onclick='downloadPDF()'>Download PDF</button>
       <button type='button' class='btn btn-info mt-3' onclick='downloadWord()'>Download Word</button>
     </div>
