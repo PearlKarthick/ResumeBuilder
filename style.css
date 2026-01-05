@@ -3,4 +3,4 @@ body.dark-mode .card { background-color: #1e1e1e; color: #fff; }
 .form-step { display: none; }
 .form-step.active { display: block; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-#resume-preview { min-height: 200px; }
+#resume-preview { min-height: 300px; padding: 20px; }
