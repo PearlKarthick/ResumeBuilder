@@ -58,7 +58,7 @@ function generateResume() {
 
 function downloadPDF() {
   const element = document.getElementById('resume-preview');
-  const opt = { margin: 0.5, filename: 'resume.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
+  const opt = { margin: 0.2, filename: 'resume.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, scrollY: 0 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } };
   html2pdf().set(opt).from(element).save();
 }
 
@@ -77,3 +77,22 @@ function downloadWord() {
 document.getElementById('toggle-dark').addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
+
+function calculateATS() {
+  const skills = document.getElementById('skills').value.toLowerCase().split(',');
+  const jobTitle = document.getElementById('jobTitle').value.toLowerCase();
+
+  const keywordBank = {
+    'software engineer': ['javascript', 'python', 'api', 'agile', 'react', 'node'],
+    'data analyst': ['sql', 'excel', 'python', 'tableau', 'data visualization'],
+    'project manager': ['agile', 'scrum', 'leadership', 'risk management', 'communication']
+  };
+
+  let keywords = keywordBank[jobTitle] || [];
+  let matched = skills.filter(skill => keywords.includes(skill.trim()));
+  let score = Math.round((matched.length / keywords.length) * 100);
+
+  let suggestions = keywords.filter(k => !matched.includes(k));
+
+  document.getElementById('ats-score').innerHTML = `ATS Score: ${score}%<br>Missing Keywords: ${suggestions.join(', ')}`;
+}
