@@ -33,11 +33,43 @@ function generateResume() {
   const linkedin = document.getElementById('linkedin').value;
   const location = document.getElementById('location').value;
   const summary = quill.root.innerHTML;
+  const jobTitle = document.getElementById('jobTitle').value;
+  const companyName = document.getElementById('companyName').value;
+  const jobLocation = document.getElementById('jobLocation').value;
+  const dates = document.getElementById('dates').value;
+  const responsibilities = document.getElementById('responsibilities').value;
+  const degree = document.getElementById('degree').value;
+  const institution = document.getElementById('institution').value;
+  const gradYear = document.getElementById('gradYear').value;
+  const certifications = document.getElementById('certifications').value;
+  const techSkills = document.getElementById('techSkills').value;
+  const softSkills = document.getElementById('softSkills').value;
+  const projectName = document.getElementById('projectName').value;
+  const technologies = document.getElementById('technologies').value;
+  const impact = document.getElementById('impact').value;
+  const achievements = document.getElementById('achievements').value;
+  const languages = document.getElementById('languages').value;
 
   document.getElementById('resume-preview').innerHTML = `
     <h2>${name}</h2>
     <p>${phone} | ${email} | ${linkedin} | ${location}</p>
     <h3>Professional Summary</h3>${summary}
+    <h3>Work Experience</h3>
+    <p><strong>${jobTitle}</strong> at ${companyName}, ${jobLocation} (${dates})</p>
+    <p>${responsibilities}</p>
+    <h3>Education</h3>
+    <p>${degree}, ${institution}, ${gradYear}</p>
+    <p>Certifications: ${certifications}</p>
+    <h3>Skills</h3>
+    <p>Technical: ${techSkills}</p>
+    <p>Soft: ${softSkills}</p>
+    <h3>Projects</h3>
+    <p>${projectName} | ${technologies}</p>
+    <p>${impact}</p>
+    <h3>Achievements & Awards</h3>
+    <p>${achievements}</p>
+    <h3>Languages</h3>
+    <p>${languages}</p>
   `;
 }
 
@@ -60,8 +92,8 @@ function downloadWord() {
 }
 
 function calculateATS() {
-  const skills = document.getElementById('summary-editor').innerText.toLowerCase().split(/\s+/);
-  const jobTitle = document.getElementById('name').value.toLowerCase();
+  const skills = document.getElementById('techSkills').value.toLowerCase().split(',').map(s => s.trim());
+  const jobTitle = document.getElementById('jobTitle').value.toLowerCase();
 
   const keywordBank = {
     'software engineer': ['javascript', 'python', 'api', 'agile', 'react', 'node'],
@@ -76,5 +108,4 @@ function calculateATS() {
   let suggestions = keywords.filter(k => !matched.includes(k));
 
   document.getElementById('ats-score').innerHTML = `ATS Score: ${score}%<br>Missing Keywords: ${suggestions.join(', ')}`;
-  document.getElementById('ats-suggestions').innerHTML = `Suggested Keywords: ${keywords.join(', ')}`;
 }
