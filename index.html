@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
-  <title>Resume Builder</title>
-  <style>
-    body { font-family: Arial; margin: 20px; }
-    .container { max-width: 600px; margin: auto; }
-    input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; }
-    #resume-preview { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
-    button { padding: 10px 15px; }
-  </style>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Resume Builder</title>
+<link rel='stylesheet' href='style.css'>
 </head>
 <body>
-  <div class="container">
-    <h1>Resume Builder</h1>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="text" id="jobTitle" placeholder="Job Title">
-    <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
-    <textarea id="experience" placeholder="Experience"></textarea>
-    <textarea id="education" placeholder="Education"></textarea>
-    <button onclick="generateResume()">Preview Resume</button>
-    <button onclick="downloadPDF()">Download PDF</button>
-
-    <div id="resume-preview"></div>
-  </div>
-
-  https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js</script>
-  <script>
-    function generateResume() {
-      const name = document.getElementById('name').value;
-      const jobTitle = document.getElementById('jobTitle').value;
-      const skills = document.getElementById('skills').value;
-      const experience = document.getElementById('experience').value;
-      const education = document.getElementById('education').value;
-
-      document.getElementById('resume-preview').innerHTML = `
-        <h2>${name}</h2>
-        <h3>${jobTitle}</h3>
-        <p><strong>Skills:</strong> ${skills}</p>
-        <p><strong>Experience:</strong> ${experience}</p>
-        <p><strong>Education:</strong> ${education}</p>
-      `;
-    }
-
-    function downloadPDF() {
-      const element = document.getElementById('resume-preview');
-      html2pdf().from(element).save('resume.pdf');
-    }
-  </script>
+<div class='container'>
+  <h1>Professional Resume Builder</h1>
+  <form id='resume-form'>
+    <div class='form-step active'>
+      <h2>Personal Details</h2>
+      <input type='text' id='name' placeholder='Full Name' required>
+      <input type='text' id='email' placeholder='Email' required>
+      <input type='text' id='phone' placeholder='Phone' required>
+      <input type='text' id='linkedin' placeholder='LinkedIn Profile'>
+      <button type='button' class='next-btn'>Next</button>
+    </div>
+    <div class='form-step'>
+      <h2>Professional Details</h2>
+      <input type='text' id='jobTitle' placeholder='Job Title' required>
+      <textarea id='skills' placeholder='Skills (comma separated)' required></textarea>
+      <textarea id='experience' placeholder='Experience' required></textarea>
+      <button type='button' class='prev-btn'>Previous</button>
+      <button type='button' class='next-btn'>Next</button>
+    </div>
+    <div class='form-step'>
+      <h2>Education</h2>
+      <textarea id='education' placeholder='Education Details' required></textarea>
+      <button type='button' class='prev-btn'>Previous</button>
+      <button type='button' class='next-btn'>Next</button>
+    </div>
+    <div class='form-step'>
+      <h2>Certificates & Achievements</h2>
+      <textarea id='certificates' placeholder='Certificates'></textarea>
+      <textarea id='achievements' placeholder='Achievements'></textarea>
+      <button type='button' class='prev-btn'>Previous</button>
+      <button type='button' class='next-btn'>Next</button>
+    </div>
+    <div class='form-step'>
+      <h2>Preview & Download</h2>
+      <div id='resume-preview'></div>
+      <button type='button' class='prev-btn'>Previous</button>
+      <button type='button' onclick='downloadPDF()'>Download PDF</button>
+    </div>
+  </form>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'></script>
+<script src='script.js'></script>
 </body>
 </html>
