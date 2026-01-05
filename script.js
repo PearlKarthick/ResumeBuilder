@@ -40,20 +40,63 @@ function generateResume() {
   const languages = document.getElementById('languages').value;
   const references = document.getElementById('references').value;
 
+  const templateClass = document.getElementById('template-select').value;
+
+  document.getElementById('resume-preview').className = templateClass;
   document.getElementById('resume-preview').innerHTML = `
-    <h2>${name}</h2>
-    <p>${email} | ${phone} | ${linkedin}</p>
-    <h3>${jobTitle}</h3>
-    <p><strong>Summary:</strong> ${summary}</p>
-    <p><strong>Skills:</strong> ${skills}</p>
-    <p><strong>Experience:</strong> ${experience}</p>
-    <p><strong>Education:</strong> ${education}</p>
-    <p><strong>Certificates:</strong> ${certificates}</p>
-    <p><strong>Achievements:</strong> ${achievements}</p>
-    <p><strong>Projects:</strong> ${projects}</p>
-    <p><strong>Languages:</strong> ${languages}</p>
-    <p><strong>References:</strong> ${references}</p>
+    <div class='draggable-section'><h2>${name}</h2><p>${email} | ${phone} | ${linkedin}</p></div>
+    <div class='draggable-section'><h3>${jobTitle}</h3></div>
+    <div class='draggable-section'><p><strong>Summary:</strong> ${summary}</p></div>
+    <div class='draggable-section'><p><strong>Skills:</strong> ${skills}</p></div>
+    <div class='draggable-section'><p><strong>Experience:</strong> ${experience}</p></div>
+    <div class='draggable-section'><p><strong>Education:</strong> ${education}</p></div>
+    <div class='draggable-section'><p><strong>Certificates:</strong> ${certificates}</p></div>
+    <div class='draggable-section'><p><strong>Achievements:</strong> ${achievements}</p></div>
+    <div class='draggable-section'><p><strong>Projects:</strong> ${projects}</p></div>
+    <div class='draggable-section'><p><strong>Languages:</strong> ${languages}</p></div>
+    <div class='draggable-section'><p><strong>References:</strong> ${references}</p></div>
   `;
+  enableDragAndDrop();
+}
+
+function enableDragAndDrop() {
+  const sections = document.querySelectorAll('.draggable-section');
+  const container = document.getElementById('resume-preview');
+
+  sections.forEach(section => {
+    section.draggable = true;
+    section.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', e.target.outerHTML);
+      e.target.classList.add('dragging');
+    });
+    section.addEventListener('dragend', e => {
+      e.target.classList.remove('dragging');
+    });
+  });
+
+  container.addEventListener('dragover', e => {
+    e.preventDefault();
+    const dragging = document.querySelector('.dragging');
+    const afterElement = getDragAfterElement(container, e.clientY);
+    if (afterElement == null) {
+      container.appendChild(dragging);
+    } else {
+      container.insertBefore(dragging, afterElement);
+    }
+  });
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.draggable-section:not(.dragging)')];
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
 function downloadPDF() {
@@ -79,7 +122,7 @@ document.getElementById('toggle-dark').addEventListener('click', () => {
 });
 
 function calculateATS() {
-  const skills = document.getElementById('skills').value.toLowerCase().split(',');
+  const skills = document.getElementById('skills').value.toLowerCase().split(',').map(s => s.trim());
   const jobTitle = document.getElementById('jobTitle').value.toLowerCase();
 
   const keywordBank = {
@@ -89,10 +132,11 @@ function calculateATS() {
   };
 
   let keywords = keywordBank[jobTitle] || [];
-  let matched = skills.filter(skill => keywords.includes(skill.trim()));
-  let score = Math.round((matched.length / keywords.length) * 100);
+  let matched = skills.filter(skill => keywords.includes(skill));
+  let score = keywords.length > 0 ? Math.round((matched.length / keywords.length) * 100) : 0;
 
   let suggestions = keywords.filter(k => !matched.includes(k));
 
   document.getElementById('ats-score').innerHTML = `ATS Score: ${score}%<br>Missing Keywords: ${suggestions.join(', ')}`;
+  document.getElementById('ats-suggestions').innerHTML = `Suggested Keywords: ${keywords.join(', ')}`;
 }
